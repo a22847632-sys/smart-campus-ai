@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Smart Campus Management System</title>
+    <!-- Modern Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- HEADER -->
+        <header class="app-header">
+            <div class="brand">
+                <div class="brand-icon">⚡</div>
+                <div>
+                    <h1>AI-POWERED SMART CAMPUS MANAGEMENT SYSTEM</h1>
+                    <p class="subtitle">Real-Time Computer Vision & Analytics Dashboard</p>
+                </div>
+            </div>
+            <div class="header-status">
+                <div class="status-indicator">
+                    <span class="pulse-dot"></span>
+                    <span class="status-text">SYSTEM ONLINE</span>
+                </div>
+                <div class="clock" id="live-clock">00:00:00</div>
+            </div>
+        </header>
+
+        <!-- OVERVIEW KPI CARDS -->
+        <section class="kpi-grid">
+            <div class="kpi-card">
+                <div class="kpi-header">
+                    <span class="kpi-title">Active Cameras</span>
+                    <span class="kpi-icon">🎥</span>
+                </div>
+                <div class="kpi-value" id="kpi-cams">2 / 2</div>
+                <div class="kpi-subtext">Main Entrance & Courtyard</div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-header">
+                    <span class="kpi-title">Parking Availability</span>
+                    <span class="kpi-icon">🚗</span>
+                </div>
+                <div class="kpi-value" id="kpi-parking">--</div>
+                <div class="kpi-subtext" id="kpi-parking-sub">Loading slot data...</div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-header">
+                    <span class="kpi-title">Campus Crowd Status</span>
+                    <span class="kpi-icon">👥</span>
+                </div>
+                <div class="kpi-value" id="kpi-crowd">NORMAL</div>
+                <div class="kpi-subtext" id="kpi-crowd-sub">Queue: 0 in line</div>
+            </div>
+
+            <div class="kpi-card danger-card">
+                <div class="kpi-header">
+                    <span class="kpi-title">Emergency Alerts</span>
+                    <span class="kpi-icon">🚨</span>
+                </div>
+                <div class="kpi-value" id="kpi-alerts">0 ACTIVE</div>
+                <div class="kpi-subtext" id="kpi-alerts-sub">No critical incidents</div>
+            </div>
+        </section>
+
+        <!-- MAIN LAYOUT -->
+        <div class="main-content-grid">
+            <!-- LEFT PANEL: CAMERA STREAM -->
+            <div class="panel video-panel">
+                <div class="panel-header">
+                    <h2>Live Vision Analytics Feed</h2>
+                    <div class="cam-selector">
+                        <label for="camera-select">Source:</label>
+                        <select id="camera-select">
+                            <option value="Cam-01">Cam-01 (Parking & Entrance)</option>
+                            <option value="Cam-02">Cam-02 (Courtyard & Crowd)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="video-wrapper">
+                    <img src="/video_feed" id="video-stream" alt="Live AI Camera Stream">
+                    <div class="stream-badge">AI ANALYTICS ENGINE ACTIVE</div>
+                </div>
+            </div>
+
+            <!-- RIGHT PANEL: MODULE DETAILS -->
+            <div class="panel stats-panel">
+                <!-- MODULE 1: PARKING STATS -->
+                <div class="widget">
+                    <div class="widget-header">
+                        <h3>Module 1: Smart Parking</h3>
+                        <span class="badge badge-success" id="parking-rate-badge">0% Occupied</span>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill" id="parking-bar" style="width: 0%;"></div>
+                    </div>
+                    <div class="stat-row">
+                        <div><span>Total Slots:</span> <strong id="parking-total">10</strong></div>
+                        <div><span>Occupied:</span> <strong id="parking-occupied" class="text-danger">0</strong></div>
+                        <div><span>Available:</span> <strong id="parking-available" class="text-success">10</strong></div>
+                    </div>
+                </div>
+
+                <!-- MODULE 2: CROWD & QUEUE STATS -->
+                <div class="widget">
+                    <div class="widget-header">
+                        <h3>Module 2: Crowd & Queue Management</h3>
+                        <span class="badge badge-info" id="crowd-status-badge">LOW</span>
+                    </div>
+                    <div class="stat-row">
+                        <div><span>People Count:</span> <strong id="crowd-count">0</strong></div>
+                        <div><span>Crowd Density:</span> <strong id="crowd-density">LOW</strong></div>
+                        <div><span>Queue Status:</span> <strong id="queue-status">NORMAL</strong></div>
+                    </div>
+                </div>
+
+                <!-- SYSTEM METRICS -->
+                <div class="widget">
+                    <div class="widget-header">
+                        <h3>Engine Performance</h3>
+                        <span class="badge badge-dark">ByteTrack + YOLOv8</span>
+                    </div>
+                    <div class="stat-row">
+                        <div><span>Target Objects:</span> <strong>Person, Vehicle</strong></div>
+                        <div><span>FPS Performance:</span> <strong id="system-fps">~15.0 FPS</strong></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- BOTTOM PANEL: EMERGENCY ALERTS LOG TABLE -->
+        <section class="panel table-panel">
+            <div class="panel-header">
+                <h2>Module 3: Emergency Incidents & Alerts Log</h2>
+                <button class="btn-refresh" id="refresh-alerts-btn">🔄 Refresh Log</button>
+            </div>
+            <div class="table-responsive">
+                <table class="alert-table">
+                    <thead>
+                        <tr>
+                            <th>Incident ID</th>
+                            <th>Event Type</th>
+                            <th>Location / Camera</th>
+                            <th>Timestamp</th>
+                            <th>Confidence</th>
+                            <th>Status</th>
+                            <th>Details</th>
+                        </tr>
+                    </thead>
+                    <tbody id="alerts-table-body">
+                        <tr>
+                            <td colspan="7" class="text-center text-muted">No emergency incidents recorded. System monitoring normally.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+    <!-- Custom JS -->
+    <script src="/static/js/main.js"></script>
+</body>
+</html>
